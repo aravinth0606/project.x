@@ -1,6 +1,5 @@
-// static/js/script.js
 document.addEventListener('DOMContentLoaded', function() {
-    // Tab switching functionality
+    
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
     
@@ -8,22 +7,22 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', () => {
             const tabId = button.getAttribute('data-tab');
             
-            // Update active tab button
+            
             tabButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
             
-            // Show corresponding tab content
+            
             tabContents.forEach(content => content.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             
-            // Reset document section when switching away
+           
             if (tabId !== 'document') {
                 resetDocumentSection();
             }
         });
     });
     
-    // Q&A Section
+   
     const questionInput = document.getElementById('question-input');
     const askButton = document.getElementById('ask-button');
     const chatHistory = document.getElementById('chat-history');
@@ -40,19 +39,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const question = questionInput.value.trim();
         if (!question) return;
         
-        // Add user message to chat
+    
         addMessage(question, 'user');
         questionInput.value = '';
         
-        // Show loading state
+        
         askButton.disabled = true;
         askButton.innerHTML = '<i class="fas fa-spinner loading"></i> Processing';
         
-        // Get context from document section if available
+        
         const extractedText = document.getElementById('extracted-text').textContent.trim();
         const context = extractedText || '';
         
-        // Send question to backend
+       
         fetch('/ask', {
             method: 'POST',
             headers: {
@@ -95,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
         chatHistory.scrollTop = chatHistory.scrollHeight;
     }
     
-    // Translator Section
+  
     const sourceLang = document.getElementById('source-lang');
     const targetLang = document.getElementById('target-lang');
     const swapButton = document.getElementById('swap-langs');
@@ -139,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             translatedText.value = data.translated_text;
             
-            // If source language was auto, update it to detected language
+           
             if (sourceLang.value === 'auto' && data.src_lang) {
                 sourceLang.value = data.src_lang;
             }
@@ -153,14 +152,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Document Section
+    
     const dropZone = document.getElementById('drop-zone');
     const fileInput = document.getElementById('file-input');
     const extractedText = document.getElementById('extracted-text');
     const useForQaButton = document.getElementById('use-for-qa');
     const translateDocButton = document.getElementById('translate-doc');
     
-    // Drag and drop functionality
+   
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
         dropZone.addEventListener(eventName, preventDefaults, false);
     });
@@ -210,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Show loading state
+       
         dropZone.innerHTML = '<i class="fas fa-spinner loading"></i><p>Processing document...</p>';
         
         const formData = new FormData();
@@ -230,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function() {
             useForQaButton.disabled = false;
             translateDocButton.disabled = false;
             
-            // Reset drop zone
+            
             dropZone.innerHTML = `
                 <i class="fas fa-cloud-upload-alt"></i>
                 <p>Drag & drop your PDF or text file here</p>
@@ -239,7 +238,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <label for="file-input" class="browse-btn">Browse Files</label>
             `;
             
-            // Re-attach event listeners
+           
             document.getElementById('file-input').addEventListener('change', handleFiles);
         })
         .catch(error => {
@@ -256,10 +255,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     useForQaButton.addEventListener('click', function() {
-        // Switch to Q&A tab
+      
         document.querySelector('.tab-button[data-tab="qa"]').click();
         
-        // Focus on question input
+       
         questionInput.focus();
     });
     
@@ -267,13 +266,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const text = extractedText.textContent.trim();
         if (!text) return;
         
-        // Switch to translator tab
+       
         document.querySelector('.tab-button[data-tab="translate"]').click();
         
-        // Set the text to translate
+     
         sourceText.value = text;
         
-        // Focus on source text
+        
         sourceText.focus();
     });
     
@@ -283,4 +282,5 @@ document.addEventListener('DOMContentLoaded', function() {
         useForQaButton.disabled = true;
         translateDocButton.disabled = true;
     }
+
 });
