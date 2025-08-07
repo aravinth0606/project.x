@@ -7,12 +7,12 @@ from translate import Translator as LibreTranslator
 
 app = Flask(__name__)
 
-# Configuration
+
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['ALLOWED_EXTENSIONS'] = {'pdf', 'txt'}
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max
 
-# Initialize local models
+
 try:
     qa_pipeline = pipeline("question-answering", model="distilbert-base-cased-distilled-squad")
 except:
@@ -105,7 +105,7 @@ def upload_file():
             else:
                 return jsonify({'error': 'Unsupported file type'}), 400
             
-            # Clean up
+         
             os.remove(filepath)
             
             return jsonify({
@@ -119,4 +119,5 @@ def upload_file():
 
 if __name__ == '__main__':
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
     app.run(debug=True)
