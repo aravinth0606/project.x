@@ -6,5 +6,5 @@ python app.py  (enter in new terminal).
 
 step 3.On first run, it will download the necessary models automatically.
 
-step 4.Open your browser and navigate to http://localhost:5000 (this web link is given by the teminal).
+step 4.Open your browser and navigate to http://localhost:5000 (this website link is given by the teminal).
 
